@@ -33,6 +33,10 @@
             this.btnTripSwitchArrivalAndDepartureStations = new System.Windows.Forms.Button();
             this.tabControlMainForm = new System.Windows.Forms.TabControl();
             this.tabTripPage = new System.Windows.Forms.TabPage();
+            this.lstTripFoundTripsView = new System.Windows.Forms.ListView();
+            this.clmTripTransportationType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmTripDepartureLocationAndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmTripArrivalLocationAndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnTripSearch = new System.Windows.Forms.Button();
             this.lblShownTrips = new System.Windows.Forms.Label();
             this.lblTripTimePicker = new System.Windows.Forms.Label();
@@ -42,6 +46,8 @@
             this.cmbTripArrivalStation = new System.Windows.Forms.ComboBox();
             this.cmbTripDepartureStation = new System.Windows.Forms.ComboBox();
             this.tabDeparturePage = new System.Windows.Forms.TabPage();
+            this.lblDepFoundResults = new System.Windows.Forms.Label();
+            this.lstDepFoundResults = new System.Windows.Forms.ListBox();
             this.btnDepSearch = new System.Windows.Forms.Button();
             this.lblDepTimePicker = new System.Windows.Forms.Label();
             this.lblDepDatePicker = new System.Windows.Forms.Label();
@@ -49,12 +55,6 @@
             this.dtpDepDatePicker = new System.Windows.Forms.DateTimePicker();
             this.cmbDepDepartureStation = new System.Windows.Forms.ComboBox();
             this.lblDepDepartureStation = new System.Windows.Forms.Label();
-            this.lblDepFoundResults = new System.Windows.Forms.Label();
-            this.lstDepFoundResults = new System.Windows.Forms.ListBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.clmTripDepartureLocationAndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTripArrivalLocationAndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTripTransportationType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControlMainForm.SuspendLayout();
             this.tabTripPage.SuspendLayout();
             this.tabDeparturePage.SuspendLayout();
@@ -100,7 +100,7 @@
             // 
             // tabTripPage
             // 
-            this.tabTripPage.Controls.Add(this.listView1);
+            this.tabTripPage.Controls.Add(this.lstTripFoundTripsView);
             this.tabTripPage.Controls.Add(this.btnTripSearch);
             this.tabTripPage.Controls.Add(this.lblShownTrips);
             this.tabTripPage.Controls.Add(this.lblTripTimePicker);
@@ -119,6 +119,33 @@
             this.tabTripPage.TabIndex = 0;
             this.tabTripPage.Text = "Trips";
             this.tabTripPage.UseVisualStyleBackColor = true;
+            // 
+            // lstTripFoundTripsView
+            // 
+            this.lstTripFoundTripsView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmTripTransportationType,
+            this.clmTripDepartureLocationAndTime,
+            this.clmTripArrivalLocationAndTime});
+            this.lstTripFoundTripsView.Location = new System.Drawing.Point(0, 210);
+            this.lstTripFoundTripsView.Name = "lstTripFoundTripsView";
+            this.lstTripFoundTripsView.Size = new System.Drawing.Size(404, 194);
+            this.lstTripFoundTripsView.TabIndex = 14;
+            this.lstTripFoundTripsView.UseCompatibleStateImageBehavior = false;
+            this.lstTripFoundTripsView.View = System.Windows.Forms.View.Details;
+            // 
+            // clmTripTransportationType
+            // 
+            this.clmTripTransportationType.Text = "Typ";
+            // 
+            // clmTripDepartureLocationAndTime
+            // 
+            this.clmTripDepartureLocationAndTime.Text = "Abfahrt";
+            this.clmTripDepartureLocationAndTime.Width = 121;
+            // 
+            // clmTripArrivalLocationAndTime
+            // 
+            this.clmTripArrivalLocationAndTime.Text = "Ankunft";
+            this.clmTripArrivalLocationAndTime.Width = 112;
             // 
             // btnTripSearch
             // 
@@ -210,6 +237,23 @@
             this.tabDeparturePage.Text = "Abfahrtsmonitor";
             this.tabDeparturePage.UseVisualStyleBackColor = true;
             // 
+            // lblDepFoundResults
+            // 
+            this.lblDepFoundResults.AutoSize = true;
+            this.lblDepFoundResults.Location = new System.Drawing.Point(3, 76);
+            this.lblDepFoundResults.Name = "lblDepFoundResults";
+            this.lblDepFoundResults.Size = new System.Drawing.Size(102, 13);
+            this.lblDepFoundResults.TabIndex = 25;
+            this.lblDepFoundResults.Text = "Gefundene Fahrten:";
+            // 
+            // lstDepFoundResults
+            // 
+            this.lstDepFoundResults.FormattingEnabled = true;
+            this.lstDepFoundResults.Location = new System.Drawing.Point(0, 92);
+            this.lstDepFoundResults.Name = "lstDepFoundResults";
+            this.lstDepFoundResults.Size = new System.Drawing.Size(404, 316);
+            this.lstDepFoundResults.TabIndex = 24;
+            // 
             // btnDepSearch
             // 
             this.btnDepSearch.Location = new System.Drawing.Point(295, 30);
@@ -271,50 +315,6 @@
             this.lblDepDepartureStation.TabIndex = 14;
             this.lblDepDepartureStation.Text = "Abfahrtsstation:";
             // 
-            // lblDepFoundResults
-            // 
-            this.lblDepFoundResults.AutoSize = true;
-            this.lblDepFoundResults.Location = new System.Drawing.Point(3, 76);
-            this.lblDepFoundResults.Name = "lblDepFoundResults";
-            this.lblDepFoundResults.Size = new System.Drawing.Size(102, 13);
-            this.lblDepFoundResults.TabIndex = 25;
-            this.lblDepFoundResults.Text = "Gefundene Fahrten:";
-            // 
-            // lstDepFoundResults
-            // 
-            this.lstDepFoundResults.FormattingEnabled = true;
-            this.lstDepFoundResults.Location = new System.Drawing.Point(0, 92);
-            this.lstDepFoundResults.Name = "lstDepFoundResults";
-            this.lstDepFoundResults.Size = new System.Drawing.Size(404, 316);
-            this.lstDepFoundResults.TabIndex = 24;
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clmTripTransportationType,
-            this.clmTripDepartureLocationAndTime,
-            this.clmTripArrivalLocationAndTime});
-            this.listView1.Location = new System.Drawing.Point(0, 210);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(404, 194);
-            this.listView1.TabIndex = 14;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // clmTripDepartureLocationAndTime
-            // 
-            this.clmTripDepartureLocationAndTime.Text = "Abfahrt";
-            this.clmTripDepartureLocationAndTime.Width = 121;
-            // 
-            // clmTripArrivalLocationAndTime
-            // 
-            this.clmTripArrivalLocationAndTime.Text = "Ankunft";
-            this.clmTripArrivalLocationAndTime.Width = 112;
-            // 
-            // clmTripTransportationType
-            // 
-            this.clmTripTransportationType.Text = "Typ";
-            // 
             // mainFormSwissTransport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -358,7 +358,7 @@
         private System.Windows.Forms.DateTimePicker dtpDepDatePicker;
         private System.Windows.Forms.ComboBox cmbDepDepartureStation;
         private System.Windows.Forms.Label lblDepDepartureStation;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lstTripFoundTripsView;
         private System.Windows.Forms.ColumnHeader clmTripTransportationType;
         private System.Windows.Forms.ColumnHeader clmTripDepartureLocationAndTime;
         private System.Windows.Forms.ColumnHeader clmTripArrivalLocationAndTime;

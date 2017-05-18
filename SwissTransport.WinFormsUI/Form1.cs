@@ -66,6 +66,7 @@ namespace SwissTransport.WinFormsUI
 
         private void btnTripSearch_Click(object sender, EventArgs e)
         {
+
             if (cmbTripArrivalStation.Text != "" && cmbTripDepartureStation.Text != "" && dtpDepDatePicker.Value != null && dtpDepTimePicker.Value != null)
             {
                 string date = String.Format("yyyy-mm-dd", dtpDepDatePicker.Value);
@@ -76,7 +77,9 @@ namespace SwissTransport.WinFormsUI
                 {
                     foreach (var item in resultDataFromQuery.ConnectionList)
                     {
-                        
+                        string depConnectionsDateTime = DateTime.Parse(item.From.Departure).ToString();
+                        string[] departureTripsConnections = {depConnectionsDateTime};
+                        ListViewItem lvi = new ListViewItem();
                     }
                 }
                 else
