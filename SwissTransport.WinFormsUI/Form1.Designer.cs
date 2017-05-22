@@ -33,10 +33,9 @@
             this.btnTripSwitchArrivalAndDepartureStations = new System.Windows.Forms.Button();
             this.tabControlMainForm = new System.Windows.Forms.TabControl();
             this.tabTripPage = new System.Windows.Forms.TabPage();
-            this.lstTripFoundTripsView = new System.Windows.Forms.ListView();
-            this.clmTripTransportationType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTripDepartureLocationAndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmTripArrivalLocationAndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dgvTripShowFoundTrips = new System.Windows.Forms.DataGridView();
+            this.dgvTripDeparture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvTripArrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnTripSearch = new System.Windows.Forms.Button();
             this.lblShownTrips = new System.Windows.Forms.Label();
             this.lblTripTimePicker = new System.Windows.Forms.Label();
@@ -46,8 +45,11 @@
             this.cmbTripArrivalStation = new System.Windows.Forms.ComboBox();
             this.cmbTripDepartureStation = new System.Windows.Forms.ComboBox();
             this.tabDeparturePage = new System.Windows.Forms.TabPage();
+            this.dgvDepShowFoundDepartures = new System.Windows.Forms.DataGridView();
+            this.dgvDepType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDepDeparture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDepDirection = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblDepFoundResults = new System.Windows.Forms.Label();
-            this.lstDepFoundResults = new System.Windows.Forms.ListBox();
             this.btnDepSearch = new System.Windows.Forms.Button();
             this.lblDepTimePicker = new System.Windows.Forms.Label();
             this.lblDepDatePicker = new System.Windows.Forms.Label();
@@ -55,9 +57,12 @@
             this.dtpDepDatePicker = new System.Windows.Forms.DateTimePicker();
             this.cmbDepDepartureStation = new System.Windows.Forms.ComboBox();
             this.lblDepDepartureStation = new System.Windows.Forms.Label();
+            this.btnTripSendMail = new System.Windows.Forms.Button();
             this.tabControlMainForm.SuspendLayout();
             this.tabTripPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTripShowFoundTrips)).BeginInit();
             this.tabDeparturePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDepShowFoundDepartures)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTripDepartureStation
@@ -83,7 +88,7 @@
             this.btnTripSwitchArrivalAndDepartureStations.Location = new System.Drawing.Point(144, 31);
             this.btnTripSwitchArrivalAndDepartureStations.Name = "btnTripSwitchArrivalAndDepartureStations";
             this.btnTripSwitchArrivalAndDepartureStations.Size = new System.Drawing.Size(36, 20);
-            this.btnTripSwitchArrivalAndDepartureStations.TabIndex = 4;
+            this.btnTripSwitchArrivalAndDepartureStations.TabIndex = 1;
             this.btnTripSwitchArrivalAndDepartureStations.Text = "<-->";
             this.btnTripSwitchArrivalAndDepartureStations.UseVisualStyleBackColor = true;
             this.btnTripSwitchArrivalAndDepartureStations.Click += new System.EventHandler(this.btnTripSwitchArrivalAndDepartureStations_Click);
@@ -92,15 +97,17 @@
             // 
             this.tabControlMainForm.Controls.Add(this.tabTripPage);
             this.tabControlMainForm.Controls.Add(this.tabDeparturePage);
-            this.tabControlMainForm.Location = new System.Drawing.Point(0, 1);
+            this.tabControlMainForm.Location = new System.Drawing.Point(2, 1);
             this.tabControlMainForm.Name = "tabControlMainForm";
             this.tabControlMainForm.SelectedIndex = 0;
-            this.tabControlMainForm.Size = new System.Drawing.Size(412, 433);
-            this.tabControlMainForm.TabIndex = 5;
+            this.tabControlMainForm.Size = new System.Drawing.Size(410, 837);
+            this.tabControlMainForm.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabControlMainForm.TabIndex = 7;
             // 
             // tabTripPage
             // 
-            this.tabTripPage.Controls.Add(this.lstTripFoundTripsView);
+            this.tabTripPage.Controls.Add(this.btnTripSendMail);
+            this.tabTripPage.Controls.Add(this.dgvTripShowFoundTrips);
             this.tabTripPage.Controls.Add(this.btnTripSearch);
             this.tabTripPage.Controls.Add(this.lblShownTrips);
             this.tabTripPage.Controls.Add(this.lblTripTimePicker);
@@ -115,44 +122,47 @@
             this.tabTripPage.Location = new System.Drawing.Point(4, 22);
             this.tabTripPage.Name = "tabTripPage";
             this.tabTripPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTripPage.Size = new System.Drawing.Size(404, 407);
+            this.tabTripPage.Size = new System.Drawing.Size(402, 811);
             this.tabTripPage.TabIndex = 0;
             this.tabTripPage.Text = "Trips";
             this.tabTripPage.UseVisualStyleBackColor = true;
             // 
-            // lstTripFoundTripsView
+            // dgvTripShowFoundTrips
             // 
-            this.lstTripFoundTripsView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clmTripTransportationType,
-            this.clmTripDepartureLocationAndTime,
-            this.clmTripArrivalLocationAndTime});
-            this.lstTripFoundTripsView.Location = new System.Drawing.Point(0, 210);
-            this.lstTripFoundTripsView.Name = "lstTripFoundTripsView";
-            this.lstTripFoundTripsView.Size = new System.Drawing.Size(404, 194);
-            this.lstTripFoundTripsView.TabIndex = 14;
-            this.lstTripFoundTripsView.UseCompatibleStateImageBehavior = false;
-            this.lstTripFoundTripsView.View = System.Windows.Forms.View.Details;
+            this.dgvTripShowFoundTrips.AllowUserToAddRows = false;
+            this.dgvTripShowFoundTrips.AllowUserToDeleteRows = false;
+            this.dgvTripShowFoundTrips.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.dgvTripShowFoundTrips.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvTripShowFoundTrips.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTripShowFoundTrips.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvTripDeparture,
+            this.dgvTripArrival});
+            this.dgvTripShowFoundTrips.Location = new System.Drawing.Point(0, 178);
+            this.dgvTripShowFoundTrips.Name = "dgvTripShowFoundTrips";
+            this.dgvTripShowFoundTrips.ReadOnly = true;
+            this.dgvTripShowFoundTrips.Size = new System.Drawing.Size(399, 651);
+            this.dgvTripShowFoundTrips.TabIndex = 13;
             // 
-            // clmTripTransportationType
+            // dgvTripDeparture
             // 
-            this.clmTripTransportationType.Text = "Typ";
+            this.dgvTripDeparture.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvTripDeparture.HeaderText = "Abfahrt";
+            this.dgvTripDeparture.Name = "dgvTripDeparture";
+            this.dgvTripDeparture.ReadOnly = true;
             // 
-            // clmTripDepartureLocationAndTime
+            // dgvTripArrival
             // 
-            this.clmTripDepartureLocationAndTime.Text = "Abfahrt";
-            this.clmTripDepartureLocationAndTime.Width = 121;
-            // 
-            // clmTripArrivalLocationAndTime
-            // 
-            this.clmTripArrivalLocationAndTime.Text = "Ankunft";
-            this.clmTripArrivalLocationAndTime.Width = 112;
+            this.dgvTripArrival.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvTripArrival.HeaderText = "Ankunft";
+            this.dgvTripArrival.Name = "dgvTripArrival";
+            this.dgvTripArrival.ReadOnly = true;
             // 
             // btnTripSearch
             // 
-            this.btnTripSearch.Location = new System.Drawing.Point(195, 93);
+            this.btnTripSearch.Location = new System.Drawing.Point(195, 77);
             this.btnTripSearch.Name = "btnTripSearch";
-            this.btnTripSearch.Size = new System.Drawing.Size(75, 23);
-            this.btnTripSearch.TabIndex = 13;
+            this.btnTripSearch.Size = new System.Drawing.Size(121, 23);
+            this.btnTripSearch.TabIndex = 5;
             this.btnTripSearch.Text = "Suchen";
             this.btnTripSearch.UseVisualStyleBackColor = true;
             this.btnTripSearch.Click += new System.EventHandler(this.btnTripSearch_Click);
@@ -160,7 +170,7 @@
             // lblShownTrips
             // 
             this.lblShownTrips.AutoSize = true;
-            this.lblShownTrips.Location = new System.Drawing.Point(3, 183);
+            this.lblShownTrips.Location = new System.Drawing.Point(3, 162);
             this.lblShownTrips.Name = "lblShownTrips";
             this.lblShownTrips.Size = new System.Drawing.Size(132, 13);
             this.lblShownTrips.TabIndex = 12;
@@ -169,7 +179,7 @@
             // lblTripTimePicker
             // 
             this.lblTripTimePicker.AutoSize = true;
-            this.lblTripTimePicker.Location = new System.Drawing.Point(111, 81);
+            this.lblTripTimePicker.Location = new System.Drawing.Point(8, 111);
             this.lblTripTimePicker.Name = "lblTripTimePicker";
             this.lblTripTimePicker.Size = new System.Drawing.Size(43, 13);
             this.lblTripTimePicker.TabIndex = 10;
@@ -178,7 +188,7 @@
             // lblTripDatePicker
             // 
             this.lblTripDatePicker.AutoSize = true;
-            this.lblTripDatePicker.Location = new System.Drawing.Point(8, 81);
+            this.lblTripDatePicker.Location = new System.Drawing.Point(8, 64);
             this.lblTripDatePicker.Name = "lblTripDatePicker";
             this.lblTripDatePicker.Size = new System.Drawing.Size(41, 13);
             this.lblTripDatePicker.TabIndex = 9;
@@ -187,18 +197,19 @@
             // dtpTripTimePicker
             // 
             this.dtpTripTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpTripTimePicker.Location = new System.Drawing.Point(114, 97);
+            this.dtpTripTimePicker.Location = new System.Drawing.Point(7, 127);
             this.dtpTripTimePicker.Name = "dtpTripTimePicker";
-            this.dtpTripTimePicker.Size = new System.Drawing.Size(66, 20);
-            this.dtpTripTimePicker.TabIndex = 8;
+            this.dtpTripTimePicker.Size = new System.Drawing.Size(64, 20);
+            this.dtpTripTimePicker.TabIndex = 4;
             // 
             // dtpTripDatePicker
             // 
+            this.dtpTripDatePicker.CustomFormat = "yyyy-MM-dd";
             this.dtpTripDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpTripDatePicker.Location = new System.Drawing.Point(7, 97);
+            this.dtpTripDatePicker.Location = new System.Drawing.Point(7, 80);
             this.dtpTripDatePicker.Name = "dtpTripDatePicker";
             this.dtpTripDatePicker.Size = new System.Drawing.Size(80, 20);
-            this.dtpTripDatePicker.TabIndex = 7;
+            this.dtpTripDatePicker.TabIndex = 3;
             // 
             // cmbTripArrivalStation
             // 
@@ -206,7 +217,7 @@
             this.cmbTripArrivalStation.Location = new System.Drawing.Point(195, 33);
             this.cmbTripArrivalStation.Name = "cmbTripArrivalStation";
             this.cmbTripArrivalStation.Size = new System.Drawing.Size(121, 21);
-            this.cmbTripArrivalStation.TabIndex = 6;
+            this.cmbTripArrivalStation.TabIndex = 2;
             this.cmbTripArrivalStation.DropDown += new System.EventHandler(this.getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars);
             // 
             // cmbTripDepartureStation
@@ -215,13 +226,14 @@
             this.cmbTripDepartureStation.Location = new System.Drawing.Point(7, 32);
             this.cmbTripDepartureStation.Name = "cmbTripDepartureStation";
             this.cmbTripDepartureStation.Size = new System.Drawing.Size(121, 21);
-            this.cmbTripDepartureStation.TabIndex = 5;
+            this.cmbTripDepartureStation.TabIndex = 0;
             this.cmbTripDepartureStation.DropDown += new System.EventHandler(this.getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars);
+            this.cmbTripDepartureStation.DropDownClosed += new System.EventHandler(this.cmbTripDepartureStation_DropDownClosed);
             // 
             // tabDeparturePage
             // 
+            this.tabDeparturePage.Controls.Add(this.dgvDepShowFoundDepartures);
             this.tabDeparturePage.Controls.Add(this.lblDepFoundResults);
-            this.tabDeparturePage.Controls.Add(this.lstDepFoundResults);
             this.tabDeparturePage.Controls.Add(this.btnDepSearch);
             this.tabDeparturePage.Controls.Add(this.lblDepTimePicker);
             this.tabDeparturePage.Controls.Add(this.lblDepDatePicker);
@@ -232,10 +244,48 @@
             this.tabDeparturePage.Location = new System.Drawing.Point(4, 22);
             this.tabDeparturePage.Name = "tabDeparturePage";
             this.tabDeparturePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeparturePage.Size = new System.Drawing.Size(404, 407);
+            this.tabDeparturePage.Size = new System.Drawing.Size(402, 811);
             this.tabDeparturePage.TabIndex = 1;
             this.tabDeparturePage.Text = "Abfahrtsmonitor";
             this.tabDeparturePage.UseVisualStyleBackColor = true;
+            // 
+            // dgvDepShowFoundDepartures
+            // 
+            this.dgvDepShowFoundDepartures.AllowUserToAddRows = false;
+            this.dgvDepShowFoundDepartures.AllowUserToDeleteRows = false;
+            this.dgvDepShowFoundDepartures.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDepShowFoundDepartures.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvDepShowFoundDepartures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDepShowFoundDepartures.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvDepType,
+            this.dgvDepDeparture,
+            this.dgvDepDirection});
+            this.dgvDepShowFoundDepartures.Location = new System.Drawing.Point(0, 92);
+            this.dgvDepShowFoundDepartures.Name = "dgvDepShowFoundDepartures";
+            this.dgvDepShowFoundDepartures.ReadOnly = true;
+            this.dgvDepShowFoundDepartures.Size = new System.Drawing.Size(402, 723);
+            this.dgvDepShowFoundDepartures.TabIndex = 26;
+            // 
+            // dgvDepType
+            // 
+            this.dgvDepType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvDepType.HeaderText = "Typ";
+            this.dgvDepType.Name = "dgvDepType";
+            this.dgvDepType.ReadOnly = true;
+            // 
+            // dgvDepDeparture
+            // 
+            this.dgvDepDeparture.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvDepDeparture.HeaderText = "Abfahrt";
+            this.dgvDepDeparture.Name = "dgvDepDeparture";
+            this.dgvDepDeparture.ReadOnly = true;
+            // 
+            // dgvDepDirection
+            // 
+            this.dgvDepDirection.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvDepDirection.HeaderText = "Richtung";
+            this.dgvDepDirection.Name = "dgvDepDirection";
+            this.dgvDepDirection.ReadOnly = true;
             // 
             // lblDepFoundResults
             // 
@@ -246,14 +296,6 @@
             this.lblDepFoundResults.TabIndex = 25;
             this.lblDepFoundResults.Text = "Gefundene Fahrten:";
             // 
-            // lstDepFoundResults
-            // 
-            this.lstDepFoundResults.FormattingEnabled = true;
-            this.lstDepFoundResults.Location = new System.Drawing.Point(0, 92);
-            this.lstDepFoundResults.Name = "lstDepFoundResults";
-            this.lstDepFoundResults.Size = new System.Drawing.Size(404, 316);
-            this.lstDepFoundResults.TabIndex = 24;
-            // 
             // btnDepSearch
             // 
             this.btnDepSearch.Location = new System.Drawing.Point(295, 30);
@@ -262,6 +304,7 @@
             this.btnDepSearch.TabIndex = 23;
             this.btnDepSearch.Text = "Suchen";
             this.btnDepSearch.UseVisualStyleBackColor = true;
+            this.btnDepSearch.Click += new System.EventHandler(this.btnDepSearch_Click);
             // 
             // lblDepTimePicker
             // 
@@ -315,12 +358,26 @@
             this.lblDepDepartureStation.TabIndex = 14;
             this.lblDepDepartureStation.Text = "Abfahrtsstation:";
             // 
+            // btnTripSendMail
+            // 
+            this.btnTripSendMail.Enabled = false;
+            this.btnTripSendMail.Location = new System.Drawing.Point(195, 127);
+            this.btnTripSendMail.Name = "btnTripSendMail";
+            this.btnTripSendMail.Size = new System.Drawing.Size(121, 23);
+            this.btnTripSendMail.TabIndex = 14;
+            this.btnTripSendMail.Text = "Als Mail senden";
+            this.btnTripSendMail.UseVisualStyleBackColor = true;
+            this.btnTripSendMail.Click += new System.EventHandler(this.btnTripSendMail_Click);
+            // 
             // mainFormSwissTransport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(738, 459);
+            this.ClientSize = new System.Drawing.Size(411, 838);
             this.Controls.Add(this.tabControlMainForm);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(427, 877);
+            this.MinimumSize = new System.Drawing.Size(427, 877);
             this.Name = "mainFormSwissTransport";
             this.Text = "Main Form";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -328,8 +385,10 @@
             this.tabControlMainForm.ResumeLayout(false);
             this.tabTripPage.ResumeLayout(false);
             this.tabTripPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTripShowFoundTrips)).EndInit();
             this.tabDeparturePage.ResumeLayout(false);
             this.tabDeparturePage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDepShowFoundDepartures)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -350,7 +409,6 @@
         private System.Windows.Forms.Label lblShownTrips;
         private System.Windows.Forms.Button btnTripSearch;
         private System.Windows.Forms.Label lblDepFoundResults;
-        private System.Windows.Forms.ListBox lstDepFoundResults;
         private System.Windows.Forms.Button btnDepSearch;
         private System.Windows.Forms.Label lblDepTimePicker;
         private System.Windows.Forms.Label lblDepDatePicker;
@@ -358,10 +416,14 @@
         private System.Windows.Forms.DateTimePicker dtpDepDatePicker;
         private System.Windows.Forms.ComboBox cmbDepDepartureStation;
         private System.Windows.Forms.Label lblDepDepartureStation;
-        private System.Windows.Forms.ListView lstTripFoundTripsView;
-        private System.Windows.Forms.ColumnHeader clmTripTransportationType;
-        private System.Windows.Forms.ColumnHeader clmTripDepartureLocationAndTime;
-        private System.Windows.Forms.ColumnHeader clmTripArrivalLocationAndTime;
+        private System.Windows.Forms.DataGridView dgvTripShowFoundTrips;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvTripDeparture;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvTripArrival;
+        private System.Windows.Forms.DataGridView dgvDepShowFoundDepartures;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvDepType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvDepDeparture;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvDepDirection;
+        private System.Windows.Forms.Button btnTripSendMail;
     }
 }
 
