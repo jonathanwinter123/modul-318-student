@@ -58,6 +58,7 @@
             this.dtpDepDatePicker = new System.Windows.Forms.DateTimePicker();
             this.cmbDepDepartureStation = new System.Windows.Forms.ComboBox();
             this.lblDepDepartureStation = new System.Windows.Forms.Label();
+            this.gmapDepLocationMap = new GMap.NET.WindowsForms.GMapControl();
             this.tabControlMainForm.SuspendLayout();
             this.tabTripPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTripShowFoundTrips)).BeginInit();
@@ -100,12 +101,13 @@
             this.tabControlMainForm.Location = new System.Drawing.Point(2, 1);
             this.tabControlMainForm.Name = "tabControlMainForm";
             this.tabControlMainForm.SelectedIndex = 0;
-            this.tabControlMainForm.Size = new System.Drawing.Size(410, 837);
+            this.tabControlMainForm.Size = new System.Drawing.Size(783, 837);
             this.tabControlMainForm.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControlMainForm.TabIndex = 7;
             // 
             // tabTripPage
             // 
+            this.tabTripPage.Controls.Add(this.gmapDepLocationMap);
             this.tabTripPage.Controls.Add(this.btnTripSendMail);
             this.tabTripPage.Controls.Add(this.dgvTripShowFoundTrips);
             this.tabTripPage.Controls.Add(this.btnTripSearch);
@@ -122,7 +124,7 @@
             this.tabTripPage.Location = new System.Drawing.Point(4, 22);
             this.tabTripPage.Name = "tabTripPage";
             this.tabTripPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTripPage.Size = new System.Drawing.Size(402, 811);
+            this.tabTripPage.Size = new System.Drawing.Size(775, 811);
             this.tabTripPage.TabIndex = 0;
             this.tabTripPage.Text = "Trips";
             this.tabTripPage.UseVisualStyleBackColor = true;
@@ -239,7 +241,6 @@
             this.cmbTripDepartureStation.Size = new System.Drawing.Size(121, 21);
             this.cmbTripDepartureStation.TabIndex = 0;
             this.cmbTripDepartureStation.DropDown += new System.EventHandler(this.getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars);
-            this.cmbTripDepartureStation.DropDownClosed += new System.EventHandler(this.cmbTripDepartureStation_DropDownClosed);
             // 
             // tabDeparturePage
             // 
@@ -255,7 +256,7 @@
             this.tabDeparturePage.Location = new System.Drawing.Point(4, 22);
             this.tabDeparturePage.Name = "tabDeparturePage";
             this.tabDeparturePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeparturePage.Size = new System.Drawing.Size(402, 808);
+            this.tabDeparturePage.Size = new System.Drawing.Size(402, 811);
             this.tabDeparturePage.TabIndex = 1;
             this.tabDeparturePage.Text = "Abfahrtsmonitor";
             this.tabDeparturePage.UseVisualStyleBackColor = true;
@@ -369,19 +370,43 @@
             this.lblDepDepartureStation.TabIndex = 14;
             this.lblDepDepartureStation.Text = "Abfahrtsstation:";
             // 
+            // gmapDepLocationMap
+            // 
+            this.gmapDepLocationMap.Bearing = 0F;
+            this.gmapDepLocationMap.CanDragMap = true;
+            this.gmapDepLocationMap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gmapDepLocationMap.GrayScaleMode = false;
+            this.gmapDepLocationMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gmapDepLocationMap.LevelsKeepInMemmory = 5;
+            this.gmapDepLocationMap.Location = new System.Drawing.Point(405, 15);
+            this.gmapDepLocationMap.MarkersEnabled = true;
+            this.gmapDepLocationMap.MaxZoom = 18;
+            this.gmapDepLocationMap.MinZoom = 3;
+            this.gmapDepLocationMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gmapDepLocationMap.Name = "gmapDepLocationMap";
+            this.gmapDepLocationMap.NegativeMode = false;
+            this.gmapDepLocationMap.PolygonsEnabled = true;
+            this.gmapDepLocationMap.RetryLoadTile = 0;
+            this.gmapDepLocationMap.RoutesEnabled = true;
+            this.gmapDepLocationMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gmapDepLocationMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gmapDepLocationMap.ShowTileGridLines = false;
+            this.gmapDepLocationMap.Size = new System.Drawing.Size(363, 160);
+            this.gmapDepLocationMap.TabIndex = 15;
+            this.gmapDepLocationMap.Zoom = 15D;
+            // 
             // mainFormSwissTransport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 838);
+            this.ClientSize = new System.Drawing.Size(786, 838);
             this.Controls.Add(this.tabControlMainForm);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(427, 877);
             this.MinimumSize = new System.Drawing.Size(427, 877);
             this.Name = "mainFormSwissTransport";
             this.Text = "Main Form";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.SizeChanged += new System.EventHandler(this.mainFormSwissTransport_SizeChanged);
+            this.SizeChanged += new System.EventHandler(this.setControlInMainFormToFormSize);
             this.tabControlMainForm.ResumeLayout(false);
             this.tabTripPage.ResumeLayout(false);
             this.tabTripPage.PerformLayout();
@@ -424,6 +449,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDepDeparture;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvDepDirection;
         private System.Windows.Forms.Button btnTripSendMail;
+        private GMap.NET.WindowsForms.GMapControl gmapDepLocationMap;
     }
 }
 

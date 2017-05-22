@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using GMap.NET.WindowsForms;
+using GMap.NET.MapProviders;
+using System.Device.Location;
 
 namespace SwissTransport.WinFormsUI
 {
@@ -18,6 +21,9 @@ namespace SwissTransport.WinFormsUI
 
         //NewLine variable for easier code
         private string nl = Environment.NewLine;
+
+        private string noConnectionsForEnteredKeywordError = "Für diese Eingaben gibt es leider keine Verbindungen.";
+        private string fillAllFieldsError = "Bitte füllen Sie alle Felder aus.";
 
         public mainFormSwissTransport()
         {
@@ -32,22 +38,44 @@ namespace SwissTransport.WinFormsUI
 
             dgvTripShowFoundTrips.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             dgvDepShowFoundDepartures.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            var currentClientLocation = GetCurrentClientLocation();
+
+            gmapDepLocationMap.MapProvider = GMapProviders.GoogleMap;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            gmapDepLocationMap.Position = new GMap.NET.PointLatLng(currentClientLocation.Latitude,currentClientLocation.Longitude);
         }
 
-        private void mainFormSwissTransport_SizeChanged(object sender, EventArgs e)
-        {
-            setControlInMainFormToFormSize();
-        }
-
-        private void setControlInMainFormToFormSize()
+        private void setControlInMainFormToFormSize(object sender = null, EventArgs e = null)
         {
             tabControlMainForm.Size = this.Size;
             dgvTripShowFoundTrips.Width = this.Width;
+            dgvDepShowFoundDepartures.Width = this.Width;
+        }
+
+        private GeoCoordinate GetCurrentClientLocation()
+        {
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+
+            watcher.TryStart(true, TimeSpan.FromMilliseconds(0));
+            GeoCoordinate coord = watcher.Position.Location;
+
+            if (coord.IsUnknown != true)
+            {
+                return coord;
+            }
+            else
+            {
+                coord.Latitude = 47.0502;
+                coord.Longitude = 8.3093;
+                return coord;
+            }
         }
 
         private void getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars(object sender, EventArgs e)
         {
             ComboBox currentCombobox = (ComboBox)sender;
+            currentCombobox.Items.Clear();
             if (currentCombobox.Text.Length >= 4)
             {
                 currentCombobox.Items.Add("Loading...");
@@ -77,13 +105,12 @@ namespace SwissTransport.WinFormsUI
 
         private void btnTripSearch_Click(object sender, EventArgs e)
         {
-
+            removePreviousEntries(dgvTripShowFoundTrips);
             if (cmbTripArrivalStation.Text != String.Empty && cmbTripDepartureStation.Text != String.Empty && dtpTripDatePicker.Value != null && dtpTripTimePicker.Value != null)
             {
-                string date = dtpTripDatePicker.Value.ToString("yyyy-MM-dd");
-                string time = dtpTripTimePicker.Value.ToString("HH:mm");
+                string dateTime = FormatUserDateTime(dtpTripDatePicker, dtpTripTimePicker);
 
-                var resultDataFromQuery = getTransportData.GetConnections(cmbTripDepartureStation.Text, cmbTripArrivalStation.Text, date, time);
+                var resultDataFromQuery = getTransportData.GetConnections(cmbTripDepartureStation.Text, cmbTripArrivalStation.Text, dateTime);
 
                 if (resultDataFromQuery != null)
                 {
@@ -91,32 +118,49 @@ namespace SwissTransport.WinFormsUI
                     {
                         DateTime unformattedDepartureDateTime = DateTime.Parse(item.From.Departure);
                         DateTime unformattedArrivalDateTime = DateTime.Parse(item.To.Arrival);
-                        string departureDateTime = unformattedDepartureDateTime.ToString("dd.MM.yyy" + nl + "HH:mm");
+                        string departureDateTime = FormatApiDate(unformattedDepartureDateTime);
                         string departureStation = item.From.Station.Name;
-                        string arrivalDateTime = unformattedArrivalDateTime.ToString("dd.MM.yyy" + nl + "HH:mm");
+                        string arrivalDateTime = FormatApiDate(unformattedArrivalDateTime);
                         string arrivalStation = item.To.Station.Name;
 
-                        this.dgvTripShowFoundTrips.Rows.Add(departureStation + nl + nl + departureDateTime, arrivalStation + nl + nl + arrivalDateTime, "seven", "eight");
+                        this.dgvTripShowFoundTrips.Rows.Add(departureStation + nl + nl + departureDateTime, arrivalStation + nl + nl + arrivalDateTime);
                     }
                 }
                 else
-                    MessageBox.Show("Für diese Eingaben gibt es leider keine Verbindungen.");
+                    MessageBox.Show(noConnectionsForEnteredKeywordError);
             }
             else
-                MessageBox.Show("Bitte füllen Sie alle Felder aus.");
+                MessageBox.Show(fillAllFieldsError);
 
             btnTripSendMail.Enabled = true;
         }
 
+        private void removePreviousEntries(DataGridView dgvToDeletePreviousEntries)
+        {
+            while (dgvToDeletePreviousEntries.Rows.Count >= 1)
+            {
+                foreach (DataGridViewRow row in dgvToDeletePreviousEntries.Rows)
+                    dgvToDeletePreviousEntries.Rows.Remove(row);
+            }
+        }
+
+        private string FormatUserDateTime(DateTimePicker dtpDate, DateTimePicker dtpTime)
+        {
+            string date = dtpDate.Value.ToString("yyyy-MM-dd");
+            string time = dtpTime.Value.ToString("HH:mm");
+            string dateTime = date + "+" + time;
+            return dateTime;
+        }
+
+        private string FormatApiDate(DateTime dateAndTime)
+        {
+            return dateAndTime.ToString("dd.MM.yyy" + nl + "HH:mm");
+
+        }
+
         private void btnDepSearch_Click(object sender, EventArgs e)
         {
-            while (dgvDepShowFoundDepartures.Rows.Count >= 1)
-            {
-                foreach (DataGridViewRow row in dgvDepShowFoundDepartures.Rows)
-                {
-                    dgvDepShowFoundDepartures.Rows.Remove(row);
-                }
-            } 
+            removePreviousEntries(dgvDepShowFoundDepartures);
 
             ComboBox currentCombobox = cmbDepDepartureStation;
             var foundStationsWithKeyWord = getTransportData.GetStations(currentCombobox.Text);
@@ -127,17 +171,15 @@ namespace SwissTransport.WinFormsUI
 
             if (cmbDepDepartureStation.Text != "" && dtpDepDatePicker.Value != null && dtpDepTimePicker.Value != null)
             {
-                string date = dtpDepDatePicker.Value.ToString("yyyy-MM-dd");
-                string time = dtpDepTimePicker.Value.ToString("HH:mm");
+                string dateTime = FormatUserDateTime(dtpDepDatePicker, dtpDepTimePicker);
 
-                var resultDataFromQuery = getTransportData.GetStationBoard(cmbTripDepartureStation.Text, idOfSearchedStation, date, time);
+                var resultDataFromQuery = getTransportData.GetStationBoard(cmbTripDepartureStation.Text, idOfSearchedStation, dateTime);
 
                 if (resultDataFromQuery != null)
                 {
                     foreach (var item in resultDataFromQuery.Entries)
                     {
-                        DateTime unformattedDepartureDateTime = DateTime.Parse(item.Stop.Departure.ToShortDateString());
-                        string departureDateTime = unformattedDepartureDateTime.ToString("dd.MM.yyy" + nl + "HH:mm");
+                        string departureDateTime = FormatApiDate(item.Stop.Departure);
                         string departureStation = item.Stop.Station.Name;
                         string typeTransport = item.Name;
 
@@ -145,15 +187,10 @@ namespace SwissTransport.WinFormsUI
                     }
                 }
                 else
-                    MessageBox.Show("Für diese Eingaben gibt es leider keine Verbindungen.");
+                    MessageBox.Show(noConnectionsForEnteredKeywordError);
             }
             else
-                MessageBox.Show("Bitte füllen Sie alle Felder aus.");
-        }
-
-        private void cmbTripDepartureStation_DropDownClosed(object sender, EventArgs e)
-        {
-            
+                MessageBox.Show(fillAllFieldsError);
         }
 
         private void btnTripSendMail_Click(object sender, EventArgs e)
