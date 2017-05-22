@@ -33,6 +33,7 @@
             this.btnTripSwitchArrivalAndDepartureStations = new System.Windows.Forms.Button();
             this.tabControlMainForm = new System.Windows.Forms.TabControl();
             this.tabTripPage = new System.Windows.Forms.TabPage();
+            this.btnTripSendMail = new System.Windows.Forms.Button();
             this.dgvTripShowFoundTrips = new System.Windows.Forms.DataGridView();
             this.dgvTripDeparture = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvTripArrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +58,6 @@
             this.dtpDepDatePicker = new System.Windows.Forms.DateTimePicker();
             this.cmbDepDepartureStation = new System.Windows.Forms.ComboBox();
             this.lblDepDepartureStation = new System.Windows.Forms.Label();
-            this.btnTripSendMail = new System.Windows.Forms.Button();
             this.tabControlMainForm.SuspendLayout();
             this.tabTripPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTripShowFoundTrips)).BeginInit();
@@ -127,6 +127,17 @@
             this.tabTripPage.Text = "Trips";
             this.tabTripPage.UseVisualStyleBackColor = true;
             // 
+            // btnTripSendMail
+            // 
+            this.btnTripSendMail.Enabled = false;
+            this.btnTripSendMail.Location = new System.Drawing.Point(195, 127);
+            this.btnTripSendMail.Name = "btnTripSendMail";
+            this.btnTripSendMail.Size = new System.Drawing.Size(121, 23);
+            this.btnTripSendMail.TabIndex = 14;
+            this.btnTripSendMail.Text = "Als Mail senden";
+            this.btnTripSendMail.UseVisualStyleBackColor = true;
+            this.btnTripSendMail.Click += new System.EventHandler(this.btnTripSendMail_Click);
+            // 
             // dgvTripShowFoundTrips
             // 
             this.dgvTripShowFoundTrips.AllowUserToAddRows = false;
@@ -137,7 +148,7 @@
             this.dgvTripShowFoundTrips.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvTripDeparture,
             this.dgvTripArrival});
-            this.dgvTripShowFoundTrips.Location = new System.Drawing.Point(0, 178);
+            this.dgvTripShowFoundTrips.Location = new System.Drawing.Point(0, 181);
             this.dgvTripShowFoundTrips.Name = "dgvTripShowFoundTrips";
             this.dgvTripShowFoundTrips.ReadOnly = true;
             this.dgvTripShowFoundTrips.Size = new System.Drawing.Size(399, 651);
@@ -244,7 +255,7 @@
             this.tabDeparturePage.Location = new System.Drawing.Point(4, 22);
             this.tabDeparturePage.Name = "tabDeparturePage";
             this.tabDeparturePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeparturePage.Size = new System.Drawing.Size(402, 811);
+            this.tabDeparturePage.Size = new System.Drawing.Size(402, 808);
             this.tabDeparturePage.TabIndex = 1;
             this.tabDeparturePage.Text = "Abfahrtsmonitor";
             this.tabDeparturePage.UseVisualStyleBackColor = true;
@@ -358,17 +369,6 @@
             this.lblDepDepartureStation.TabIndex = 14;
             this.lblDepDepartureStation.Text = "Abfahrtsstation:";
             // 
-            // btnTripSendMail
-            // 
-            this.btnTripSendMail.Enabled = false;
-            this.btnTripSendMail.Location = new System.Drawing.Point(195, 127);
-            this.btnTripSendMail.Name = "btnTripSendMail";
-            this.btnTripSendMail.Size = new System.Drawing.Size(121, 23);
-            this.btnTripSendMail.TabIndex = 14;
-            this.btnTripSendMail.Text = "Als Mail senden";
-            this.btnTripSendMail.UseVisualStyleBackColor = true;
-            this.btnTripSendMail.Click += new System.EventHandler(this.btnTripSendMail_Click);
-            // 
             // mainFormSwissTransport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -416,7 +416,7 @@
         private System.Windows.Forms.DateTimePicker dtpDepDatePicker;
         private System.Windows.Forms.ComboBox cmbDepDepartureStation;
         private System.Windows.Forms.Label lblDepDepartureStation;
-        private System.Windows.Forms.DataGridView dgvTripShowFoundTrips;
+        public System.Windows.Forms.DataGridView dgvTripShowFoundTrips;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTripDeparture;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvTripArrival;
         private System.Windows.Forms.DataGridView dgvDepShowFoundDepartures;

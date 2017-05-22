@@ -158,7 +158,8 @@ namespace SwissTransport.WinFormsUI
 
         private void btnTripSendMail_Click(object sender, EventArgs e)
         {
-
+            sendConnectionsViaMailForm sendMailForm = new sendConnectionsViaMailForm(dgvTripShowFoundTrips);
+            sendMailForm.ShowDialog();
         }
     }
 }
