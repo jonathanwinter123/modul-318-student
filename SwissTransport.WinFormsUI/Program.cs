@@ -16,7 +16,7 @@ namespace SwissTransport.WinFormsUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new mainFormSwissTransport());
+            Application.Run(new MainFormSwissTransport());
         }
     }
 }

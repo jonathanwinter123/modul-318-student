@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<recordtable
+embeddedrepository="False"
+id="82866032-d26a-440a-9b5c-772fed2f505d"
+mode="Global"
+rxversion="7.0">
+	<name>
+		OpenApp
+	</name>
+	<repeatcount>
+		1
+	</repeatcount>
+	<turbomode>
+		False
+	</turbomode>
+	<genreport>
+		True
+	</genreport>
+	<speedfactor>
+		1
+	</speedfactor>
+	<useDefaultItemLogging>
+		True
+	</useDefaultItemLogging>
+	<codegen
+	classname="OpenApp"
+	namespace="SwissTransport">
+	</codegen>
+	<variables>
+	</variables>
+	<recorditems>
+	</recorditems>
+	<repository
+	id="ef89fe7a-b9e0-4864-ac12-03cd2d0b0877"
+	name="SwissTransportRepository"
+	relativepath="SwissTransportRepository.rxrep"
+	rxversion="7.0">
+		<codegen
+		classname="SwissTransportRepository"
+		namespace="SwissTransport">
+		</codegen>
+		<rootfolder
+		id="624ba46b-b64c-435b-ad97-90fb77091fbb"
+		name="_rootdummy_">
+		</rootfolder>
+	</repository>
+	<usercodefile
+	lang="CSharp">
+		OpenApp.UserCode.cs
+	</usercodefile>
+	<references>
+	</references>
+</recordtable>

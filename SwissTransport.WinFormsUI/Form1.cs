@@ -14,7 +14,7 @@ using System.Device.Location;
 
 namespace SwissTransport.WinFormsUI
 {
-    public partial class mainFormSwissTransport : Form
+    public partial class MainFormSwissTransport : Form
     {
         //instantiate Transport class for getting the data
         private Transport getTransportData = new Transport();
@@ -22,17 +22,29 @@ namespace SwissTransport.WinFormsUI
         //NewLine variable for easier code
         private string nl = Environment.NewLine;
 
+        //Error messages
         private string noConnectionsForEnteredKeywordError = "Für diese Eingaben gibt es leider keine Verbindungen.";
         private string fillAllFieldsError = "Bitte füllen Sie alle Felder aus.";
+        private string minThreeLettersError = "Min. drei Zeichen eingeben.";
+        private string stationNotFoundError = "Station nicht gefunden";
 
-        public mainFormSwissTransport()
+        public MainFormSwissTransport()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        //Load event of main form
+        /*
+         * <summary>
+         *      Setting tabControl and datagridviews to the same size/width as the form.
+         *      Setting the timePicker to time format
+         *      Setting the defaultCellStyle to wrapMode, this is needed to allow multiline values in a cell
+         *      Getting the current location initializing the map with the current coordinates or with the coordinates from Lucerne.
+         * </summary>
+         */
+        private void MainFormSwissTransport_Load(object sender, EventArgs e)
         {
-            setControlInMainFormToFormSize();
+            SetControlInMainFormToFormSize();
             dtpTripTimePicker.Format = DateTimePickerFormat.Time;
             dtpTripTimePicker.ShowUpDown = true;
 
@@ -42,22 +54,32 @@ namespace SwissTransport.WinFormsUI
             var currentClientLocation = GetCurrentClientLocation();
 
             gmapDepLocationMap.MapProvider = GMapProviders.GoogleMap;
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;          //Gets map always from the server to ensure that correct map is used
             gmapDepLocationMap.Position = new GMap.NET.PointLatLng(currentClientLocation.Latitude,currentClientLocation.Longitude);
         }
 
-        private void setControlInMainFormToFormSize(object sender = null, EventArgs e = null)
+        /*
+         * <summary>
+         *      Set tabControl to form size and dgv widths to form width
+         * </summary>
+         */
+        private void SetControlInMainFormToFormSize(object sender = null, EventArgs e = null)
         {
             tabControlMainForm.Size = this.Size;
             dgvTripShowFoundTrips.Width = this.Width;
             dgvDepShowFoundDepartures.Width = this.Width;
         }
 
+        /*
+         * <summary>
+         *      Get current location if device has gps otherwise give back coordinates of Lucerne
+         * </summary>
+         */
         private GeoCoordinate GetCurrentClientLocation()
         {
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
 
-            watcher.TryStart(true, TimeSpan.FromMilliseconds(0));
+            watcher.TryStart(true, TimeSpan.FromMilliseconds(5000));
             GeoCoordinate coord = watcher.Position.Location;
 
             if (coord.IsUnknown != true)
@@ -72,11 +94,17 @@ namespace SwissTransport.WinFormsUI
             }
         }
 
-        private void getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars(object sender, EventArgs e)
+        /*
+         * <summary>
+         *      Clears all Combobox items, then gets Stations which match the entered value and adds them as combobox items
+         *      Needs at least 3 characters
+         * </summary>
+         */
+        private void GetStationsForComboBoxDropdownIfQueryIsLongerThanThreeChars(object sender, EventArgs e)
         {
             ComboBox currentCombobox = (ComboBox)sender;
             currentCombobox.Items.Clear();
-            if (currentCombobox.Text.Length >= 4)
+            if (currentCombobox.Text.Length >= 3)
             {
                 currentCombobox.Items.Add("Loading...");
 
@@ -90,11 +118,16 @@ namespace SwissTransport.WinFormsUI
             }
             else
             {
-                cmbTripDepartureStation.Items.Add("Bitte mindestens vier Zeichen eingeben.");
+                cmbTripDepartureStation.Items.Add(minThreeLettersError);
             }
         }
 
-        private void btnTripSwitchArrivalAndDepartureStations_Click(object sender, EventArgs e)
+        /*
+         * <summary>
+         *      Switches entered stations in the Trips tab
+         * </summary>
+         */
+        private void BtnTripSwitchArrivalAndDepartureStations_Click(object sender, EventArgs e)
         {
             string oldDepartureStation = cmbTripDepartureStation.Text;
             string oldArrivalStation = cmbTripArrivalStation.Text;
@@ -103,9 +136,17 @@ namespace SwissTransport.WinFormsUI
             cmbTripArrivalStation.Text = oldDepartureStation;
         }
 
-        private void btnTripSearch_Click(object sender, EventArgs e)
+        /*
+         * <summary>
+         *      Click event of the Search button in the trip tab calls this function
+         *      Removes previous items of the DataGridView, checks if the fields are empty and gets the api data
+         *      Formats the datetime and fills the data in the datagridview
+         * </summary>
+         */
+        private void BtnTripSearch_Click(object sender, EventArgs e)
         {
-            removePreviousEntries(dgvTripShowFoundTrips);
+            RemovePreviousEntries(dgvTripShowFoundTrips);
+
             if (cmbTripArrivalStation.Text != String.Empty && cmbTripDepartureStation.Text != String.Empty && dtpTripDatePicker.Value != null && dtpTripTimePicker.Value != null)
             {
                 string dateTime = FormatUserDateTime(dtpTripDatePicker, dtpTripTimePicker);
@@ -134,8 +175,11 @@ namespace SwissTransport.WinFormsUI
 
             btnTripSendMail.Enabled = true;
         }
-
-        private void removePreviousEntries(DataGridView dgvToDeletePreviousEntries)
+        /// <summary>
+        ///     Removes all items of a DataGridView
+        /// </summary>
+        /// <param name="dgvToDeletePreviousEntries"></param>
+        private void RemovePreviousEntries(DataGridView dgvToDeletePreviousEntries)
         {
             while (dgvToDeletePreviousEntries.Rows.Count >= 1)
             {
@@ -144,6 +188,12 @@ namespace SwissTransport.WinFormsUI
             }
         }
 
+        /// <summary>
+        ///     Formats the date and time for the api request
+        /// </summary>
+        /// <param name="dtpDate"></param>
+        /// <param name="dtpTime"></param>
+        /// <returns></returns>
         private string FormatUserDateTime(DateTimePicker dtpDate, DateTimePicker dtpTime)
         {
             string date = dtpDate.Value.ToString("yyyy-MM-dd");
@@ -152,20 +202,44 @@ namespace SwissTransport.WinFormsUI
             return dateTime;
         }
 
+        /// <summary>
+        ///     Formats the api date and time to swiss standard date and time
+        /// </summary>
+        /// <param name="dateAndTime"></param>
+        /// <returns></returns>
         private string FormatApiDate(DateTime dateAndTime)
         {
             return dateAndTime.ToString("dd.MM.yyy" + nl + "HH:mm");
 
         }
 
-        private void btnDepSearch_Click(object sender, EventArgs e)
+        /*
+         * <summary>
+         *      Click event of the Search button in the departure tab calls this function
+         *      Gets the id of a station by checking for a match between name and stationlist - this is needed for the api request of the stationboard
+         *      Removes previous items of the DataGridView, checks if the fields are empty and gets the api data
+         *      Formats the datetime and fills the data in the datagridview
+         * </summary>
+         */
+        private void BtnDepSearch_Click(object sender, EventArgs e)
         {
-            removePreviousEntries(dgvDepShowFoundDepartures);
+            RemovePreviousEntries(dgvDepShowFoundDepartures);
 
             ComboBox currentCombobox = cmbDepDepartureStation;
             var foundStationsWithKeyWord = getTransportData.GetStations(currentCombobox.Text);
 
-            var objectOfSearchedStation = foundStationsWithKeyWord.StationList.First(x => x.Name == currentCombobox.Text);
+            Station objectOfSearchedStation = null;
+
+            try
+            {
+                objectOfSearchedStation = foundStationsWithKeyWord.StationList.First(x => x.Name == currentCombobox.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(stationNotFoundError);
+                currentCombobox.Items.Clear();
+                currentCombobox.Text = "";
+            }
 
             string idOfSearchedStation = objectOfSearchedStation.Id;
 
@@ -193,9 +267,14 @@ namespace SwissTransport.WinFormsUI
                 MessageBox.Show(fillAllFieldsError);
         }
 
-        private void btnTripSendMail_Click(object sender, EventArgs e)
+        /// <summary>
+        ///     Opens a new form to send the connections data as a mail
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnTripSendMail_Click(object sender, EventArgs e)
         {
-            sendConnectionsViaMailForm sendMailForm = new sendConnectionsViaMailForm(dgvTripShowFoundTrips);
+            SendConnectionsViaMailForm sendMailForm = new SendConnectionsViaMailForm(dgvTripShowFoundTrips);
             sendMailForm.ShowDialog();
         }
     }

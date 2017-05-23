@@ -1,0 +1,18 @@
+﻿<Properties>
+  <Array name="active">
+    <Element value="SwissTransport.rxtst" />
+  </Array>
+  <Array name="bookmarks" />
+  <Array name="files">
+    <Element value="SwissTransport.rxtst" />
+    <Element value="SearchForStation.rxrec" />
+    <Element value="SearchForConnectionWithCurrentDate.rxrec" />
+    <Element value="SearchForConnectionWithSpecifcDate.rxrec" />
+  </Array>
+  <Properties name="projectSavedData">
+    <Properties name="customTool">
+      <runOnBuild value="False" />
+    </Properties>
+    <Array name="recentusercodeselections" />
+  </Properties>
+</Properties>

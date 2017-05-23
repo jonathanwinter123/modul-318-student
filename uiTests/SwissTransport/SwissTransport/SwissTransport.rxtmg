@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modulegroupdoc
+rxversion="7.0">
+  <testsuiteentryhierarchy>
+    <flatlistofchildren>
+      <modulegroups
+      name="SwissTransport"
+      id="43f30302-e16f-49c7-b710-a0bc7ff48527"/>
+    </flatlistofchildren>
+    <childhierarchy>
+      <modulegroups
+      name="SwissTransport"
+      id="43f30302-e16f-49c7-b710-a0bc7ff48527"/>
+    </childhierarchy>
+  </testsuiteentryhierarchy>
+</modulegroupdoc>

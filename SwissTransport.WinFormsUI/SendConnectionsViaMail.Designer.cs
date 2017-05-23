@@ -1,6 +1,6 @@
 ﻿namespace SwissTransport.WinFormsUI
 {
-    partial class sendConnectionsViaMailForm
+    partial class SendConnectionsViaMailForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,6 +41,7 @@
             this.lblSenderMail = new System.Windows.Forms.Label();
             this.lblRecipientMail = new System.Windows.Forms.Label();
             this.txtRecipientMail = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.txtFromSmtpPort)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,38 +57,43 @@
             this.txtSenderMail.Location = new System.Drawing.Point(12, 113);
             this.txtSenderMail.Name = "txtSenderMail";
             this.txtSenderMail.Size = new System.Drawing.Size(100, 20);
-            this.txtSenderMail.TabIndex = 1;
+            this.txtSenderMail.TabIndex = 4;
             // 
             // txtFromMailCredentialPassword
             // 
             this.txtFromMailCredentialPassword.Location = new System.Drawing.Point(152, 70);
             this.txtFromMailCredentialPassword.Name = "txtFromMailCredentialPassword";
             this.txtFromMailCredentialPassword.Size = new System.Drawing.Size(100, 20);
-            this.txtFromMailCredentialPassword.TabIndex = 2;
+            this.txtFromMailCredentialPassword.TabIndex = 3;
             // 
             // txtFromMailCredentialUsername
             // 
             this.txtFromMailCredentialUsername.Location = new System.Drawing.Point(12, 70);
             this.txtFromMailCredentialUsername.Name = "txtFromMailCredentialUsername";
             this.txtFromMailCredentialUsername.Size = new System.Drawing.Size(100, 20);
-            this.txtFromMailCredentialUsername.TabIndex = 3;
+            this.txtFromMailCredentialUsername.TabIndex = 2;
             // 
             // btnSendMail
             // 
-            this.btnSendMail.Location = new System.Drawing.Point(197, 226);
+            this.btnSendMail.Location = new System.Drawing.Point(177, 226);
             this.btnSendMail.Name = "btnSendMail";
             this.btnSendMail.Size = new System.Drawing.Size(75, 23);
-            this.btnSendMail.TabIndex = 4;
-            this.btnSendMail.Text = "Send";
+            this.btnSendMail.TabIndex = 6;
+            this.btnSendMail.Text = "Senden";
             this.btnSendMail.UseVisualStyleBackColor = true;
-            this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
+            this.btnSendMail.Click += new System.EventHandler(this.BtnSendMail_Click);
             // 
             // txtFromSmtpPort
             // 
             this.txtFromSmtpPort.Location = new System.Drawing.Point(152, 27);
+            this.txtFromSmtpPort.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.txtFromSmtpPort.Name = "txtFromSmtpPort";
             this.txtFromSmtpPort.Size = new System.Drawing.Size(100, 20);
-            this.txtFromSmtpPort.TabIndex = 5;
+            this.txtFromSmtpPort.TabIndex = 1;
             // 
             // lblFromSmtpServer
             // 
@@ -148,13 +154,21 @@
             this.txtRecipientMail.Location = new System.Drawing.Point(152, 113);
             this.txtRecipientMail.Name = "txtRecipientMail";
             this.txtRecipientMail.Size = new System.Drawing.Size(100, 20);
-            this.txtRecipientMail.TabIndex = 12;
+            this.txtRecipientMail.TabIndex = 5;
             // 
-            // sendConnectionsViaMailForm
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(12, 165);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(240, 23);
+            this.progressBar1.TabIndex = 12;
+            // 
+            // SendConnectionsViaMailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.txtRecipientMail);
             this.Controls.Add(this.lblRecipientMail);
             this.Controls.Add(this.lblSenderMail);
@@ -168,7 +182,7 @@
             this.Controls.Add(this.txtFromMailCredentialPassword);
             this.Controls.Add(this.txtSenderMail);
             this.Controls.Add(this.txtFromSmtpServer);
-            this.Name = "sendConnectionsViaMailForm";
+            this.Name = "SendConnectionsViaMailForm";
             this.Text = "Sende Verbindungen als Mail";
             ((System.ComponentModel.ISupportInitialize)(this.txtFromSmtpPort)).EndInit();
             this.ResumeLayout(false);
@@ -191,5 +205,6 @@
         private System.Windows.Forms.Label lblSenderMail;
         private System.Windows.Forms.Label lblRecipientMail;
         private System.Windows.Forms.TextBox txtRecipientMail;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

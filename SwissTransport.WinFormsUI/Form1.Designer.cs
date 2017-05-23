@@ -1,6 +1,6 @@
 ﻿namespace SwissTransport.WinFormsUI
 {
-    partial class mainFormSwissTransport
+    partial class MainFormSwissTransport
     {
         /// <summary>
         /// Required designer variable.
@@ -33,6 +33,7 @@
             this.btnTripSwitchArrivalAndDepartureStations = new System.Windows.Forms.Button();
             this.tabControlMainForm = new System.Windows.Forms.TabControl();
             this.tabTripPage = new System.Windows.Forms.TabPage();
+            this.gmapDepLocationMap = new GMap.NET.WindowsForms.GMapControl();
             this.btnTripSendMail = new System.Windows.Forms.Button();
             this.dgvTripShowFoundTrips = new System.Windows.Forms.DataGridView();
             this.dgvTripDeparture = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,7 +59,6 @@
             this.dtpDepDatePicker = new System.Windows.Forms.DateTimePicker();
             this.cmbDepDepartureStation = new System.Windows.Forms.ComboBox();
             this.lblDepDepartureStation = new System.Windows.Forms.Label();
-            this.gmapDepLocationMap = new GMap.NET.WindowsForms.GMapControl();
             this.tabControlMainForm.SuspendLayout();
             this.tabTripPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTripShowFoundTrips)).BeginInit();
@@ -92,7 +92,7 @@
             this.btnTripSwitchArrivalAndDepartureStations.TabIndex = 1;
             this.btnTripSwitchArrivalAndDepartureStations.Text = "<-->";
             this.btnTripSwitchArrivalAndDepartureStations.UseVisualStyleBackColor = true;
-            this.btnTripSwitchArrivalAndDepartureStations.Click += new System.EventHandler(this.btnTripSwitchArrivalAndDepartureStations_Click);
+            this.btnTripSwitchArrivalAndDepartureStations.Click += new System.EventHandler(this.BtnTripSwitchArrivalAndDepartureStations_Click);
             // 
             // tabControlMainForm
             // 
@@ -129,6 +129,32 @@
             this.tabTripPage.Text = "Trips";
             this.tabTripPage.UseVisualStyleBackColor = true;
             // 
+            // gmapDepLocationMap
+            // 
+            this.gmapDepLocationMap.Bearing = 0F;
+            this.gmapDepLocationMap.CanDragMap = true;
+            this.gmapDepLocationMap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gmapDepLocationMap.GrayScaleMode = false;
+            this.gmapDepLocationMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gmapDepLocationMap.LevelsKeepInMemmory = 5;
+            this.gmapDepLocationMap.Location = new System.Drawing.Point(405, 15);
+            this.gmapDepLocationMap.MarkersEnabled = true;
+            this.gmapDepLocationMap.MaxZoom = 18;
+            this.gmapDepLocationMap.MinZoom = 3;
+            this.gmapDepLocationMap.MouseWheelZoomEnabled = true;
+            this.gmapDepLocationMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gmapDepLocationMap.Name = "gmapDepLocationMap";
+            this.gmapDepLocationMap.NegativeMode = false;
+            this.gmapDepLocationMap.PolygonsEnabled = true;
+            this.gmapDepLocationMap.RetryLoadTile = 0;
+            this.gmapDepLocationMap.RoutesEnabled = true;
+            this.gmapDepLocationMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gmapDepLocationMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gmapDepLocationMap.ShowTileGridLines = false;
+            this.gmapDepLocationMap.Size = new System.Drawing.Size(363, 160);
+            this.gmapDepLocationMap.TabIndex = 15;
+            this.gmapDepLocationMap.Zoom = 15D;
+            // 
             // btnTripSendMail
             // 
             this.btnTripSendMail.Enabled = false;
@@ -138,7 +164,7 @@
             this.btnTripSendMail.TabIndex = 14;
             this.btnTripSendMail.Text = "Als Mail senden";
             this.btnTripSendMail.UseVisualStyleBackColor = true;
-            this.btnTripSendMail.Click += new System.EventHandler(this.btnTripSendMail_Click);
+            this.btnTripSendMail.Click += new System.EventHandler(this.BtnTripSendMail_Click);
             // 
             // dgvTripShowFoundTrips
             // 
@@ -178,7 +204,7 @@
             this.btnTripSearch.TabIndex = 5;
             this.btnTripSearch.Text = "Suchen";
             this.btnTripSearch.UseVisualStyleBackColor = true;
-            this.btnTripSearch.Click += new System.EventHandler(this.btnTripSearch_Click);
+            this.btnTripSearch.Click += new System.EventHandler(this.BtnTripSearch_Click);
             // 
             // lblShownTrips
             // 
@@ -194,18 +220,18 @@
             this.lblTripTimePicker.AutoSize = true;
             this.lblTripTimePicker.Location = new System.Drawing.Point(8, 111);
             this.lblTripTimePicker.Name = "lblTripTimePicker";
-            this.lblTripTimePicker.Size = new System.Drawing.Size(43, 13);
+            this.lblTripTimePicker.Size = new System.Drawing.Size(85, 13);
             this.lblTripTimePicker.TabIndex = 10;
-            this.lblTripTimePicker.Text = "Uhrzeit:";
+            this.lblTripTimePicker.Text = "Abfahrts Uhrzeit:";
             // 
             // lblTripDatePicker
             // 
             this.lblTripDatePicker.AutoSize = true;
             this.lblTripDatePicker.Location = new System.Drawing.Point(8, 64);
             this.lblTripDatePicker.Name = "lblTripDatePicker";
-            this.lblTripDatePicker.Size = new System.Drawing.Size(41, 13);
+            this.lblTripDatePicker.Size = new System.Drawing.Size(83, 13);
             this.lblTripDatePicker.TabIndex = 9;
-            this.lblTripDatePicker.Text = "Datum:";
+            this.lblTripDatePicker.Text = "Abfahrts Datum:";
             // 
             // dtpTripTimePicker
             // 
@@ -231,7 +257,7 @@
             this.cmbTripArrivalStation.Name = "cmbTripArrivalStation";
             this.cmbTripArrivalStation.Size = new System.Drawing.Size(121, 21);
             this.cmbTripArrivalStation.TabIndex = 2;
-            this.cmbTripArrivalStation.DropDown += new System.EventHandler(this.getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars);
+            this.cmbTripArrivalStation.DropDown += new System.EventHandler(this.GetStationsForComboBoxDropdownIfQueryIsLongerThanThreeChars);
             // 
             // cmbTripDepartureStation
             // 
@@ -240,7 +266,7 @@
             this.cmbTripDepartureStation.Name = "cmbTripDepartureStation";
             this.cmbTripDepartureStation.Size = new System.Drawing.Size(121, 21);
             this.cmbTripDepartureStation.TabIndex = 0;
-            this.cmbTripDepartureStation.DropDown += new System.EventHandler(this.getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars);
+            this.cmbTripDepartureStation.DropDown += new System.EventHandler(this.GetStationsForComboBoxDropdownIfQueryIsLongerThanThreeChars);
             // 
             // tabDeparturePage
             // 
@@ -256,7 +282,7 @@
             this.tabDeparturePage.Location = new System.Drawing.Point(4, 22);
             this.tabDeparturePage.Name = "tabDeparturePage";
             this.tabDeparturePage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeparturePage.Size = new System.Drawing.Size(402, 811);
+            this.tabDeparturePage.Size = new System.Drawing.Size(775, 811);
             this.tabDeparturePage.TabIndex = 1;
             this.tabDeparturePage.Text = "Abfahrtsmonitor";
             this.tabDeparturePage.UseVisualStyleBackColor = true;
@@ -316,7 +342,7 @@
             this.btnDepSearch.TabIndex = 23;
             this.btnDepSearch.Text = "Suchen";
             this.btnDepSearch.UseVisualStyleBackColor = true;
-            this.btnDepSearch.Click += new System.EventHandler(this.btnDepSearch_Click);
+            this.btnDepSearch.Click += new System.EventHandler(this.BtnDepSearch_Click);
             // 
             // lblDepTimePicker
             // 
@@ -359,7 +385,7 @@
             this.cmbDepDepartureStation.Name = "cmbDepDepartureStation";
             this.cmbDepDepartureStation.Size = new System.Drawing.Size(121, 21);
             this.cmbDepDepartureStation.TabIndex = 17;
-            this.cmbDepDepartureStation.DropDown += new System.EventHandler(this.getStationsForComboBoxDropdownIfQueryIsLongerThanFourChars);
+            this.cmbDepDepartureStation.DropDown += new System.EventHandler(this.GetStationsForComboBoxDropdownIfQueryIsLongerThanThreeChars);
             // 
             // lblDepDepartureStation
             // 
@@ -370,32 +396,7 @@
             this.lblDepDepartureStation.TabIndex = 14;
             this.lblDepDepartureStation.Text = "Abfahrtsstation:";
             // 
-            // gmapDepLocationMap
-            // 
-            this.gmapDepLocationMap.Bearing = 0F;
-            this.gmapDepLocationMap.CanDragMap = true;
-            this.gmapDepLocationMap.EmptyTileColor = System.Drawing.Color.Navy;
-            this.gmapDepLocationMap.GrayScaleMode = false;
-            this.gmapDepLocationMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.gmapDepLocationMap.LevelsKeepInMemmory = 5;
-            this.gmapDepLocationMap.Location = new System.Drawing.Point(405, 15);
-            this.gmapDepLocationMap.MarkersEnabled = true;
-            this.gmapDepLocationMap.MaxZoom = 18;
-            this.gmapDepLocationMap.MinZoom = 3;
-            this.gmapDepLocationMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            this.gmapDepLocationMap.Name = "gmapDepLocationMap";
-            this.gmapDepLocationMap.NegativeMode = false;
-            this.gmapDepLocationMap.PolygonsEnabled = true;
-            this.gmapDepLocationMap.RetryLoadTile = 0;
-            this.gmapDepLocationMap.RoutesEnabled = true;
-            this.gmapDepLocationMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.gmapDepLocationMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.gmapDepLocationMap.ShowTileGridLines = false;
-            this.gmapDepLocationMap.Size = new System.Drawing.Size(363, 160);
-            this.gmapDepLocationMap.TabIndex = 15;
-            this.gmapDepLocationMap.Zoom = 15D;
-            // 
-            // mainFormSwissTransport
+            // MainFormSwissTransport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -403,10 +404,10 @@
             this.Controls.Add(this.tabControlMainForm);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(427, 877);
-            this.Name = "mainFormSwissTransport";
+            this.Name = "MainFormSwissTransport";
             this.Text = "Main Form";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.SizeChanged += new System.EventHandler(this.setControlInMainFormToFormSize);
+            this.Load += new System.EventHandler(this.MainFormSwissTransport_Load);
+            this.SizeChanged += new System.EventHandler(this.SetControlInMainFormToFormSize);
             this.tabControlMainForm.ResumeLayout(false);
             this.tabTripPage.ResumeLayout(false);
             this.tabTripPage.PerformLayout();
